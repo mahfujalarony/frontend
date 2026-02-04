@@ -64,7 +64,7 @@ const menuItems = [
             }}
           >
             {collapsed ? null : (
-            <div class="w-full max-w-md p-4 bg-gradient-to-r from-[#FEF5D4] to-[#E5C973] flex items-center justify-between rounded-none">
+            <div class="w-full max-w-md p-4 bg-linier-to-r from-[#FEF5D4] to-[#E5C973] flex items-center justify-between rounded-none">
               
               <div class="flex flex-col">
                 <span class="text-gray-800 text-sm font-xs">Egg Club</span>
@@ -90,7 +90,7 @@ const menuItems = [
             width={260}
             bodyStyle={{ padding: 0 }}
           >
-                        <div class="w-full max-w-md p-4 bg-gradient-to-r from-[#FEF5D4] to-[#E5C973] flex items-center justify-between rounded-none">
+                        <div class="w-full max-w-md p-4 bg-linier-to-r from-[#FEF5D4] to-[#E5C973] flex items-center justify-between rounded-none">
               
               <div class="flex flex-col">
                 <span class="text-gray-800 text-sm font-xs">Egg Club</span>
