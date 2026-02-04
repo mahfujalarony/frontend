@@ -22,6 +22,14 @@ import UserOrder from "./pages/User/UserOrder.jsx"
 import WishListPage from "./pages/User/WishListPage.jsx"
 import UserSettings from "./pages/User/UserSettings.jsx"
 
+
+// flash sales and all products components
+import FlashSales from "./components/common/FlashSales.jsx"
+import AllProducts from "./components/common/AllProducts.jsx"
+
+
+import Search from "./pages/Search/Search.jsx"
+
 function App() {
 
   return (
@@ -46,6 +54,17 @@ function App() {
           <Route path="orders" element={<UserOrder />} />
           <Route path="wishlist" element={<WishListPage />} />
           <Route path="settings" element={<UserSettings />} />
+
+
+
+          {/* flash sales and all products */}
+          <Route path="flash-sales" element={<FlashSales />} />
+          <Route path="products" element={<AllProducts />} />
+
+
+          {/* search page */}
+          <Route path="search/:query?" element={<Search />} />
+          
         </Route>
       </Routes>
     </>

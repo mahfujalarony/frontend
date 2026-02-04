@@ -2,6 +2,7 @@ import React from "react";
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { ShoppingBasket, Pill, Soup, Package, Wallet, Clock, Tag } from "lucide-react";
+import { Collapse } from "antd";
 
 //image import 
 import discount from "./../../../public/discounts.jpg";
@@ -27,6 +28,7 @@ import s3 from "./../../../public/assets/s3.jpg";
 
 // for 6th section image
 import shop from "./../../../public/assets/shop.jpg";
+import Footer from "../../../components/common/Footer";
 
 
 
@@ -105,6 +107,29 @@ const NonAuthenticatedInterface = () => {
   },
 ];
 
+
+
+  // 8th section common qustion data
+  const items = [
+  {
+    key: '1',
+    label: 'Why choose our grocery delivery service?',
+    children: "We offer a wide selection of fresh products, competitive prices, and fast delivery to your doorstep.",
+  },
+  {
+    key: '2',
+    label: 'How do I place an order?',
+    children: "You can place an order through our website or mobile app by selecting your desired products and proceeding to checkout.",
+  },
+  {
+    key: '3',
+    label: 'What payment methods are accepted?',
+    children: "We accept various payment methods including credit/debit cards, mobile payments, and cash on delivery.",
+  },
+];
+
+
+  // Helper function to render feature titles with highlighted text
   const renderTitle = (title, highlight) => {
     const parts = title.split(highlight);
     return (
@@ -367,8 +392,10 @@ const NonAuthenticatedInterface = () => {
 
         {/* 8th Section Comon Qution */}
         <section>
-          8th section
+          <Collapse items={items} bordered={false} defaultActiveKey={['1']} />
         </section>
+
+        <Footer />
 
     </div>
   );

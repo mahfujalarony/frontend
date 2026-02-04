@@ -3,7 +3,7 @@ import AuthenticatedHomeContentInterface from './LogicalHomeContent/Authenticate
 import NonAuthenticatedInterface from './LogicalHomeContent/NonAuthenticatedInterface';
 
 const HomeContent = () => {
-    const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+    const [isAuthenticated, setIsAuthenticated] = React.useState(true);
     const [isLoading, setIsLoading] = React.useState(true);
 
 
