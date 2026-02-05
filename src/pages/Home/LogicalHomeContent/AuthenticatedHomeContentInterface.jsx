@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { InputNumber, Rate, Button } from 'antd';
+import { InputNumber, Rate, Button, Alert } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
+import Footer from './../../../components/common/Footer';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../../redux/cartSlice';
+import ProductCard from '../../../components/common/ProductCart';
+import { message } from 'antd';
 
 // Component import 
 import Story from '../../../components/ui/Story';
@@ -18,6 +23,18 @@ import s8 from './../../../public/storyImage/s8.webp';
 import s9 from './../../../public/storyImage/s9.webp';
 import s10 from './../../../public/storyImage/s10.webp';
 
+// offers image import
+import o1 from './../../../public/offers/o1.webp';
+import o2 from './../../../public/offers/o2.webp';
+import o3 from './../../../public/offers/o3.webp';
+import o4 from './../../../public/offers/o4.webp';
+import o5 from './../../../public/offers/o5.webp';
+import o6 from './../../../public/offers/o6.webp';
+import o7 from './../../../public/offers/o7.webp';
+import o8 from './../../../public/offers/o8.webp';
+import o9 from './../../../public/offers/o9.webp';
+import o10 from './../../../public/offers/o10.webp';
+
 // Data import
 import { getFlashSaleProducts } from '../../../data/products';
 import { products } from '../../../data/products';
@@ -30,8 +47,11 @@ const storyData = [
   { title: "Fresh", image: s10 }
 ];
 
+const offersImage = [o1, o2, o3, o4, o5, o6, o7, o8, o9, o10];
+
 const AuthenticatedHomeContentInterface = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // akane 10 ta flash select kora product top e deakiteci jodi aro dekte chi tohole /flash-sales e navigate kore deci
   const flashSaleProducts = getFlashSaleProducts().slice(0, 10);
@@ -39,11 +59,19 @@ const AuthenticatedHomeContentInterface = () => {
   // akane all procuts er 30 ta first e dekiteci jodi aro dekte chi tahole /products e navigate kore debo
   const allProducts = products.slice(0, 30);
 
-  const handleAddToCart = (product, quantity) => {
-    console.log(`Added ${quantity} of ${product.name} to cart`);
-    // dispatch(addToCart({ ...product, qty: quantity }));
-  };
-
+    const handleAddToCartClick = (product, qty) => {
+        console.log('Added to cart:', product.name, 'Qty:', qty, 'ta');
+        dispatch(
+            addToCart({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                imageUrl: product.imageUrl?.[0],
+                qty: qty,
+            })
+        );
+        message.success(`${qty} ${product.name} added to cart`);
+    };
 
    // search handler function
     const handleSearch = (event) => {
@@ -52,7 +80,6 @@ const AuthenticatedHomeContentInterface = () => {
       if (!query) return; 
       navigate(`/search/${encodeURIComponent(query)}`); 
     };
-
 
   return (
     <div className="pb-12 bg-gray-50 min-h-screen">
@@ -87,8 +114,6 @@ const AuthenticatedHomeContentInterface = () => {
               key={product.id} 
               className="min-w-[180px] w-[180px] bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col snap-start border border-gray-100 overflow-hidden group"
             >
-
-
               {/* Product Image Area */}
               <div className="h-40 w-full bg-gray-50 relative overflow-hidden">
                 <img 
@@ -96,27 +121,17 @@ const AuthenticatedHomeContentInterface = () => {
                   alt={product.name} 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                
-                {/* Discount Badge */}
                 <span className="absolute top-2 left-2 bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">
                   SALE
                 </span>
               </div>
 
-
-
               {/* Content Area */}
               <div className="p-3 flex flex-col flex-grow">
-                
-                {/* Category */}
                 <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">{product.category || 'Item'}</p>
-
-                {/* Title */}
                 <h3 className="text-sm font-semibold text-gray-800 line-clamp-2 leading-tight mb-1 h-10" title={product.name}>
                   {product.name}
                 </h3>
-
-                {/* Rating */}
                 <div className="flex items-center mb-2">
                   <Rate 
                     disabled 
@@ -126,8 +141,6 @@ const AuthenticatedHomeContentInterface = () => {
                   />
                   <span className="text-[10px] text-gray-400 ml-1">({product.stock})</span>
                 </div>
-
-                {/* Price & Action Area */}
                 <div className="mt-auto">
                   <div className="flex items-center justify-between mb-3">
                     <p className="text-lg font-bold text-gray-900">${product.price}</p>
@@ -135,8 +148,6 @@ const AuthenticatedHomeContentInterface = () => {
                        <p className="text-xs text-gray-400 line-through">${product.oldPrice}</p>
                     )}
                   </div>
-
-                  {/* Input & Button Group */}
                   <div className="flex items-center gap-2">
                     <InputNumber 
                       min={1} 
@@ -150,21 +161,51 @@ const AuthenticatedHomeContentInterface = () => {
                       type="primary" 
                       size="small"
                       icon={<ShoppingCartOutlined />}
-                      onClick={() => handleAddToCart(product, 1)}
+                      onClick={() =>handleAddToCartClick(product, 1)}
                       className="flex-grow bg-gray-900 hover:bg-black border-none shadow-none rounded-md flex justify-center items-center"
                     />
                   </div>
                 </div>
               </div>
-
-
             </div>
           ))}
-
         </div>
       </div>
 
+      {/* Offers Section (NEW ADDITION) */}
+      <div className="px-4 md:px-6 my-8">
+        {/* Offers Header */}
+        <div className="flex justify-between items-end mb-5">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-800 tracking-tight">Special Offers</h2>
+            <p className="text-xs text-gray-500 mt-1">Exclusive deals for you</p>
+          </div>
+          <Link 
+            to="/offers" 
+            className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
+          >
+            View More &rarr;
+          </Link>
+        </div>
 
+        {/* Offers Scrollable List */}
+        <div className="flex overflow-x-auto gap-4 pb-2 scrollbar-hide snap-x">
+          {offersImage.map((img, index) => (
+            <Link 
+              to={`/offers/${index + 1}`} 
+              key={index}
+              className="min-w-[280px] md:min-w-[350px] h-[160px] md:h-[200px] rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 snap-center relative group"
+            >
+              <img 
+                src={img} 
+                alt={`Offer ${index + 1}`} 
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors"></div>
+            </Link>
+          ))}
+        </div>
+      </div>
 
       {/* Search Section */}
       <div className="px-4 md:px-6 my-8">
@@ -181,18 +222,8 @@ const AuthenticatedHomeContentInterface = () => {
           <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
             <div className="relative">
               <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                <svg 
-                  className="w-5 h-5 text-gray-400" 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  fill="none" 
-                  viewBox="0 0 24 24"
-                >
-                  <path 
-                    stroke="currentColor" 
-                    strokeLinecap="round" 
-                    strokeWidth="2" 
-                    d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
-                  />
+                <svg className="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
                 </svg>
               </div>
               <input 
@@ -225,25 +256,44 @@ const AuthenticatedHomeContentInterface = () => {
         </div>
       </div>
 
-
-
-
       {/* All Products Section */}
-      <span className='text-lg font-semibold mb-4 block'>Our All Products</span>
-      <ProductGrid
-        products={allProducts} 
-        viewAllLink="/products"
-        onAddToCart={handleAddToCart}
-      />
 
+      <div className="px-4 md:px-6">
+        <div className="flex justify-between items-end mb-4">
+          <span className="text-lg font-semibold text-gray-800">Our Products</span>
+          <Link
+            to="/products"
+            className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
+          >
+            View All →
+          </Link>
+        </div>
 
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-3 mb-6">
+          {allProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onAddToCart={handleAddToCartClick}
+            />
+          ))}
+        </div>
 
-      {/* Offers Section */}
+        {/* view all button */}
+        <div className="flex justify-center">
+          <Link
+            to="/products"
+            className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
+          >
+            View All Products →
+          </Link>
+        </div>
+      </div>
 
-
-
+      {/* footer */}
+      <Footer />
     </div>
   )
 }
 
-export default AuthenticatedHomeContentInterface
+export default AuthenticatedHomeContentInterface;

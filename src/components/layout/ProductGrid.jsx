@@ -88,9 +88,9 @@ const ProductGrid = ({
       <div className="flex justify-center pb-8">
          <button 
            onClick={() => navigate(viewAllLink)}
-           className="px-6 py-2 bg-white border border-gray-300 text-gray-700 text-xs md:text-sm font-medium rounded-full hover:bg-gray-50 transition-colors shadow-sm"
+           className='text-center bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors'
          >
-           Load More Products
+           Load More
          </button>
       </div>
 

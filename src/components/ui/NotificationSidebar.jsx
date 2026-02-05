@@ -169,7 +169,7 @@ const NotificationSidebar = ({ notificationCount }) => {
         placement="right"
         onClose={onClose}
         open={open}
-        width={400}
+        size="large"
         className="notification-drawer"
       >
         {/* Notification List */}

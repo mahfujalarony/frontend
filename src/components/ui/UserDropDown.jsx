@@ -9,38 +9,44 @@ import {
   HeartOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setAuthState } from "../../redux/authSlice";
+import { useSelector } from "react-redux";
 
-import userImage from "./../../public/demoUser.png";
 
 // ckkk korar jonno rakci jate user na takle login/signup button dekha jay
-const demoUser = {
-  name: "Mahfuzur Rahman",
-  imageUrl: userImage,
-};
- //const demoUser = null; 
+// const demoUser = {
+//   name: "Mahfuzur Rahman",
+//   imageUrl: userImage,
+// };
+ //const demoUser = null;
+ 
+ const UserDropDown = () => {
+   const navigate = useNavigate();
+   const [visible, setVisible] = useState(false);
+   const dispatch = useDispatch();
 
-const UserDropDown = () => {
-  const navigate = useNavigate();
-  const [visible, setVisible] = useState(false);
-
-  // ইউজার না থাকলে লগইন/সাইনআপ দেখাবে
-  if (!demoUser) {
-    return (
-      <div className="flex gap-2 px-3">
-        <Button type="default" onClick={() => navigate("/login")}>
-          Log in
-        </Button>
-        <Button type="primary" onClick={() => navigate("/signup")}>
-          Sign up
-        </Button>
-      </div>
-    );
-  }
+   const user = useSelector((state) => state.auth?.user); 
+   console.log("Current User:", user);
+  
+    if (!user) {
+      return (
+        <div className="flex gap-2 px-3">
+          <Button type="default" onClick={() => navigate("/login")}>
+            Log in
+          </Button>
+          <Button type="primary" onClick={() => navigate("/signup")}>
+            Sign up
+          </Button>
+        </div>
+      );
+    }
 
   const handleClick = (key) => {
     setVisible(false);
     if (key === "logout") {
       console.log("Logout");
+      dispatch(setAuthState({ user: null, token: null, isAuth: false }));
       return;
     }
     navigate(`/${key}`);
@@ -49,7 +55,7 @@ const UserDropDown = () => {
   const menu = (
     <div className="bg-white rounded-lg shadow-lg border w-56 py-2">
       <div className="px-4 py-3 border-b">
-        <p className="font-semibold text-gray-800">{demoUser?.name}</p>
+        <p className="font-semibold text-gray-800">{user?.name}</p>
       </div>
 
       <div className="py-1">
@@ -88,25 +94,25 @@ const UserDropDown = () => {
 
   return (
     <Dropdown
-      dropdownRender={() => menu}
+      popupRender={() => menu}
       placement="bottomRight"
-      trigger={["hover", "click"]}
+      trigger={["click"]}
       open={visible}
       onOpenChange={setVisible}
     >
       <div
         className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 px-3 py-2 rounded-lg transition-all"
-        onMouseEnter={() => setVisible(true)}
+        onClick={() => setVisible(true)}
       >
         <img
-          src={demoUser.imageUrl || userImage}
-          alt={demoUser.name || "User"}
+          src={user.imageUrl || userImage}
+          alt={user.name || "User"}
           height={20}
           width={20}
           className="w-9 h-9 rounded-full"
         />
         <span className="hidden lg:block font-medium text-gray-700">
-          {demoUser.name?.split(" ")[0] || "User"}
+          {user.name?.split(" ")[0] || "User"}
         </span>
         <DownOutlined className="text-xs text-gray-500 hidden lg:block" />
       </div>

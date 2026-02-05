@@ -110,7 +110,7 @@ const LocationDropDown = ({ location, onLocationChange }) => {
 
   return (
     <Dropdown
-      dropdownRender={() => menuItems}
+      popupRender={() => menuItems}
       trigger={['click']}
       open={dropdownVisible}
       onOpenChange={setDropdownVisible}

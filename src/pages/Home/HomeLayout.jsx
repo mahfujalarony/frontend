@@ -6,6 +6,7 @@ import Navbar from "../../components/common/Navbar";
 
 
 import { BadgeDollarSign, Heart, HeartCrack } from "lucide-react"
+import CartButton from "../../components/layout/CartButton";
 
 const { Sider, Content } = Layout;
 const { useBreakpoint } = Grid;
@@ -117,6 +118,7 @@ const menuItems = [
             }}
           >
             <Outlet />
+            <CartButton />
           </Content>
         </Layout>
       </Layout>
