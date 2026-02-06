@@ -112,6 +112,7 @@ const AuthenticatedHomeContentInterface = () => {
           {flashSaleProducts.map((product) => (
             <div 
               key={product.id} 
+              onClick={() => navigate(`/products/${product.id}`)}
               className="min-w-[180px] w-[180px] bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col snap-start border border-gray-100 overflow-hidden group"
             >
               {/* Product Image Area */}

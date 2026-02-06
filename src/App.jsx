@@ -36,6 +36,7 @@ import AllProducts from "./pages/Home/products/AllProducts.jsx"
 import ProductDetailsById from "./pages/Home/products/ProductDetailsById.jsx"
 
 import Search from "./pages/Search/Search.jsx"
+import CheckoutPage from "./components/layout/CheckOutPage.jsx"
 
 import { setAuthState } from "./redux/authSlice.js"
 import { useDispatch } from "react-redux"
@@ -101,7 +102,7 @@ function App() {
 
           {/* product details by id */}
           <Route path="products/:id" element={<ProductDetailsById />} />
-          
+          <Route path="checkout" element={<CheckoutPage />} />
         </Route>
       </Routes>
     </>
