@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   Card,
@@ -59,6 +59,10 @@ const ProductDetailsById = () => {
  
   const cartItem = cartItems.find(item => String(item.id) === String(id));
   const [qty, setQty] = useState(cartItem ? cartItem.qty : 1);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const product = useMemo(
     () => products.find((p) => String(p.id) === String(id)),
